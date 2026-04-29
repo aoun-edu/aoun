@@ -154,6 +154,10 @@ select {
   gap: 24px;
 }
 
+.tests-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .service-card {
   background: var(--surface);
   border-radius: 4px;
@@ -427,6 +431,12 @@ hr {
 
 .primary-cta:hover {
   background: var(--primary-dark);
+}
+
+.primary-cta.is-disabled {
+  background: #eef2f8;
+  color: var(--primary);
+  cursor: default;
 }
 
 .hero-shape {
