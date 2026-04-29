@@ -81,7 +81,7 @@ select {
 
 .main-nav a {
   color: #2f2f2f;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .main-nav a.active {
@@ -139,7 +139,7 @@ select {
 
 .page-title h1 {
   margin: 0;
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 400;
   color: #fff;
 }
@@ -188,7 +188,7 @@ select {
 
 .card-body h2 {
   margin: 0 0 18px;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.35;
 }
 
@@ -196,7 +196,7 @@ select {
   margin: 0;
   color: #424242;
   line-height: 1.95;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .accordion {
@@ -219,7 +219,7 @@ select {
 }
 
 .accordion-icon {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1;
   color: #666;
 }
@@ -272,7 +272,7 @@ hr {
 
 .footer-inner {
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 2;
 }
@@ -287,7 +287,7 @@ hr {
 
 .footer-note {
   margin-top: 20px;
-  font-size: 14px;
+  font-size: 12px;
   color: #888;
   font-weight: 400;
 }
@@ -404,7 +404,7 @@ hr {
 
 .hero-copy h1 {
   margin: 0 0 16px;
-  font-size: clamp(54px, 9vw, 78px);
+  font-size: clamp(42px, 7vw, 60px);
   line-height: 1.05;
   font-weight: 700;
   color: #fff;
@@ -412,7 +412,7 @@ hr {
 
 .hero-lead {
   margin: 0 0 28px;
-  font-size: 23px;
+  font-size: 19px;
   line-height: 1.95;
   color: rgba(255, 255, 255, 0.92);
 }
@@ -427,7 +427,7 @@ hr {
   border-radius: 8px;
   background: var(--primary);
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -450,23 +450,7 @@ hr {
   cursor: default;
 }
 
-.hero-shape {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
-.hero-shape-top {
-  bottom: -1px;
-  height: 170px;
-  background:
-    radial-gradient(85% 120px at 12% 30%, rgba(25, 49, 88, 0.22) 0, rgba(25, 49, 88, 0.22) 36%, transparent 37%),
-    radial-gradient(55% 110px at 44% 70%, rgba(25, 49, 88, 0.24) 0, rgba(25, 49, 88, 0.24) 42%, transparent 43%),
-    radial-gradient(65% 125px at 86% 25%, rgba(25, 49, 88, 0.22) 0, rgba(25, 49, 88, 0.22) 39%, transparent 40%);
-}
 
 .home-story {
   position: relative;
@@ -475,14 +459,7 @@ hr {
   padding: 0 0 96px;
 }
 
-.hero-shape-bottom {
-  top: 0;
-  height: 140px;
-  background:
-    radial-gradient(50% 90px at 18% -10%, rgba(25, 49, 88, 0.22) 0, rgba(25, 49, 88, 0.22) 45%, transparent 46%),
-    radial-gradient(46% 92px at 54% 30%, rgba(25, 49, 88, 0.22) 0, rgba(25, 49, 88, 0.22) 45%, transparent 46%),
-    radial-gradient(54% 95px at 90% -6%, rgba(25, 49, 88, 0.22) 0, rgba(25, 49, 88, 0.22) 45%, transparent 46%);
-}
+
 
 .story-grid {
   position: relative;
@@ -499,13 +476,13 @@ hr {
 
 .story-copy h2 {
   margin: 0 0 18px;
-  font-size: clamp(30px, 4.2vw, 42px);
+  font-size: clamp(24px, 3.5vw, 32px);
   line-height: 1.35;
 }
 
 .story-copy p {
   margin: 0;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 2;
   color: #424242;
 }
@@ -521,7 +498,7 @@ hr {
 
 .help-card h2 {
   margin: 0 0 10px;
-  font-size: 30px;
+  font-size: 26px;
   color: var(--primary);
 }
 
@@ -594,7 +571,7 @@ hr {
   }
 
   .page-title h1 {
-    font-size: 34px;
+    font-size: 28px;
   }
 
   .home-hero {
@@ -606,7 +583,7 @@ hr {
   }
 
   .hero-lead {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .story-copy {
