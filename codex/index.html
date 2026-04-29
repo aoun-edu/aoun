@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="منصة عون التعليمية لخدمة الطلاب"/>
+    <title>الرئيسية | AOUN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css?v=2.0"/>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container desktop-nav">
+        <a class="brand" href="./index.html" aria-label="AOUN">
+          <img src="./assets/logo.png" alt="AOUN">
+        </a>
+        <nav class="main-nav" aria-label="التنقل الرئيسي">
+          <a class="active" href="./index.html">الرئيسية</a>
+          <a href="./our-services/index.html">الخدمات</a>
+          <a href="./tests/index.html">الاختبارات</a>
+          <a href="./courses/index.html">الدورات</a>
+          <a href="./about-us/index.html">من نحن</a>
+          <a href="./help/index.html">المساعدة</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="login-link" href="./login/index.html" data-login-link data-login-href="./login/index.html">تسجيل الدخول</a>
+        </div>
+      </div>
+
+      <div class="container mobile-nav">
+        <button class="menu-toggle" type="button" id="openMenu" aria-label="فتح القائمة">☰</button>
+        <a class="brand" href="./index.html" aria-label="AOUN">
+          <img src="./assets/logo.png" alt="AOUN">
+        </a>
+      </div>
+    </header>
+
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+      <div class="drawer-panel">
+        <button class="drawer-close" type="button" id="closeMenu" aria-label="إغلاق">×</button>
+        <nav class="drawer-nav" aria-label="التنقل الجانبي">
+          <a class="active" href="./index.html">الرئيسية</a>
+          <a href="./our-services/index.html">الخدمات</a>
+          <a href="./tests/index.html">الاختبارات</a>
+          <a href="./courses/index.html">الدورات</a>
+          <a href="./about-us/index.html">من نحن</a>
+          <a href="./help/index.html">المساعدة</a>
+        </nav>
+        <a class="drawer-login" href="./login/index.html" data-login-link data-login-href="./login/index.html">تسجيل الدخول</a>
+      </div>
+    </div>
+
+    <main>
+      <section class="home-hero">
+        <div class="container hero-content">
+          <div class="hero-copy">
+            <h1>عون</h1>
+            <p class="hero-lead">المنصة المتكاملة التي ستساعدك في رحلتك الدراسية لتوفير الوقت والجهد وتسهيل مهامك بدقة واحترافية.</p>
+            <a class="primary-cta" href="./our-services/index.html">ابدأ</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-story">
+        <div class="container story-grid">
+          <div class="story-copy">
+            <h2>طموحك يستحق.. وعون معك في كل خطوة</h2>
+            <p>في عون، نؤمن أن التعليم يجب أن يكون تجربة سهلة وممتعة. لذلك جمعنا لك الموارد والخدمات التعليمية في مكان واحد واضح، سريع، ومناسب للطلاب.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>البريد الإلكتروني: <a href="mailto:aoun.odoo@gmail.com">aoun.odoo@gmail.com</a></p>
+        <p>رقم التواصل: <a href="tel:+966508174146">+966508174146</a></p>
+        <p class="footer-note">منصة عون لخدمة الطلاب</p>
+      </div>
+    </footer>
+
+    <script src="./auth.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
