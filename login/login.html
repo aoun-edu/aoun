@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>تسجيل الدخول | AOUN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #193158;
+        --primary-dark: #122443;
+        --muted: #68758b;
+        --line: #e4e7ee;
+        --surface: #ffffff;
+        --bg: linear-gradient(180deg, #f4f6fa 0%, #eef2f8 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Cairo", sans-serif;
+        background: var(--bg);
+        color: var(--primary);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .topbar {
+        background: #fff;
+        border-bottom: 1px solid #eceff5;
+      }
+
+      .topbar-inner {
+        width: min(1140px, calc(100% - 32px));
+        min-height: 84px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .nav a {
+        font-size: 1.05rem;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .brand img {
+        width: 95px;
+        height: 40px;
+        object-fit: contain;
+      }
+
+      .wrap {
+        width: min(1140px, calc(100% - 32px));
+        margin: 0 auto;
+        min-height: calc(100vh - 84px);
+        display: grid;
+        place-items: center;
+        padding: 40px 0;
+      }
+
+      .auth-card {
+        width: min(980px, 100%);
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(25, 49, 88, 0.08);
+      }
+
+      .auth-side {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 28%),
+          radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.12), transparent 30%),
+          linear-gradient(160deg, #193158 0%, #274a83 100%);
+        color: #fff;
+        padding: 48px 42px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .auth-side::before {
+        content: "";
+        position: absolute;
+        inset: auto -80px -120px auto;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .auth-side::after {
+        content: "";
+        position: absolute;
+        inset: 32px auto auto -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .auth-side-inner {
+        position: relative;
+        z-index: 1;
+      }
+
+      .auth-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        margin-bottom: 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .auth-side h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2.4rem, 5vw, 3.5rem);
+        line-height: 1.1;
+      }
+
+      .auth-side p {
+        margin: 0;
+        line-height: 2;
+        font-size: 1.08rem;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .auth-features {
+        margin-top: 26px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .auth-feature {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1rem;
+      }
+
+      .auth-feature span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.14);
+        font-weight: 700;
+      }
+
+      .auth-panel {
+        padding: 34px 32px;
+      }
+
+      .tabs {
+        display: inline-flex;
+        gap: 8px;
+        padding: 6px;
+        background: #f4f6fa;
+        border-radius: 14px;
+        margin-bottom: 24px;
+      }
+
+      .tab-btn {
+        border: 0;
+        background: transparent;
+        color: var(--primary);
+        cursor: pointer;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .tab-btn.active {
+        background: #fff;
+        box-shadow: 0 6px 16px rgba(25, 49, 88, 0.08);
+      }
+
+      .panel {
+        display: none;
+      }
+
+      .panel.active {
+        display: block;
+      }
+
+      .panel h2 {
+        margin: 0 0 10px;
+        font-size: 1.9rem;
+      }
+
+      .panel p {
+        margin: 0 0 22px;
+        color: var(--muted);
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .field input {
+        width: 100%;
+        height: 52px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        outline: none;
+        font: inherit;
+        background: #fff;
+      }
+
+      .field input:focus {
+        border-color: #193158;
+        box-shadow: 0 0 0 4px rgba(25, 49, 88, 0.08);
+      }
+
+      .email-suggestion {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .email-suggestion.show {
+        display: block;
+      }
+
+      .email-suggestion button {
+        border: 1px solid var(--line);
+        background: #f7f9fc;
+        color: var(--primary);
+        border-radius: 999px;
+        padding: 8px 14px;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.95rem;
+      }
+
+      .submit-btn {
+        width: 100%;
+        height: 54px;
+        border: 0;
+        border-radius: 14px;
+        background: var(--primary);
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        font-size: 1.05rem;
+        cursor: pointer;
+      }
+
+      .submit-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      .helper {
+        margin-top: 16px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .helper a {
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .success {
+        display: none;
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-radius: 12px;
+        background: #edf7ef;
+        color: #1c6a33;
+        border: 1px solid #cfe7d5;
+      }
+
+      .success.show {
+        display: block;
+      }
+
+      .error {
+        display: none;
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-radius: 12px;
+        background: #fff1f1;
+        color: #a12626;
+        border: 1px solid #f0caca;
+      }
+
+      .error.show {
+        display: block;
+      }
+
+      @media (max-width: 860px) {
+        .topbar-inner {
+          flex-direction: column;
+          justify-content: center;
+          gap: 12px;
+          padding: 16px 0;
+        }
+
+        .nav {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 16px;
+        }
+
+        .auth-card {
+          grid-template-columns: 1fr;
+        }
+
+        .auth-side,
+        .auth-panel {
+          padding: 28px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <nav class="nav">
+          <a href="../index.html">الرئيسية</a>
+          <a href="../our-services/index.html">الخدمات</a>
+          <a href="../courses/index.html">الدورات</a>
+          <a href="../about-us/index.html">من نحن</a>
+          <a href="../help/index.html">المساعدة</a>
+        </nav>
+        <a class="brand" href="../index.html" aria-label="AOUN">
+          <img src="https://aoun.odoo.com/web/image/website/1/logo/AOUN?unique=bf1feec" alt="AOUN">
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="auth-card">
+        <div class="auth-side">
+          <div class="auth-side-inner">
+            <div class="auth-badge">AOUN | منصة تعليمية</div>
+            <h1>عون</h1>
+            <p>بوابتك التعليمية المصممة لتجعل الوصول إلى الخدمات الدراسية أسرع، أوضح، وأكثر تنظيمًا من أول تسجيل دخول.</p>
+            <div class="auth-features">
+              <div class="auth-feature"><span>+</span><strong>وصول سريع</strong> إلى خدماتك من مكان واحد</div>
+              <div class="auth-feature"><span>+</span><strong>واجهة مرتبة</strong> وسهلة الاستخدام للطلاب</div>
+              <div class="auth-feature"><span>+</span><strong>حساب موحد</strong> للدخول وإدارة الطلبات</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-panel">
+          <div class="tabs">
+            <button class="tab-btn active" type="button" data-target="loginPanel">تسجيل الدخول</button>
+            <button class="tab-btn" type="button" data-target="signupPanel">إنشاء حساب</button>
+          </div>
+
+          <div class="panel active" id="loginPanel">
+            <h2>تسجيل الدخول</h2>
+            <p>أدخل بياناتك للمتابعة إلى حسابك.</p>
+            <form id="loginForm">
+              <div class="field">
+                <label for="loginEmail">البريد الإلكتروني</label>
+                <input id="loginEmail" type="email" required>
+                <div class="email-suggestion" id="emailSuggestionWrap">
+                  <button type="button" id="emailSuggestionBtn"></button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="loginPassword">كلمة المرور</label>
+                <input id="loginPassword" type="password" required>
+              </div>
+              <button class="submit-btn" type="submit">دخول</button>
+              <div class="success" id="loginSuccess">تم تسجيل الدخول بنجاح، سيتم تحويلك الآن.</div>
+              <div class="error" id="loginError"></div>
+            </form>
+            <div class="helper">ليس لديك حساب؟ <a href="#" data-open-signup="true">أنشئ حسابًا الآن</a></div>
+          </div>
+
+          <div class="panel" id="signupPanel">
+            <h2>إنشاء حساب</h2>
+            <p>أنشئ حسابًا جديدًا للاستفادة من خدمات المنصة.</p>
+            <form id="signupForm">
+              <div class="field">
+                <label for="signupName">الاسم الكامل</label>
+                <input id="signupName" type="text" required>
+              </div>
+              <div class="field">
+                <label for="signupEmail">البريد الإلكتروني</label>
+                <input id="signupEmail" type="email" required>
+              </div>
+              <div class="field">
+                <label for="signupPassword">كلمة المرور</label>
+                <input id="signupPassword" type="password" required>
+              </div>
+              <button class="submit-btn" type="submit">إنشاء الحساب</button>
+              <div class="success" id="signupSuccess">تم إنشاء الحساب بنجاح. يمكنك الآن تسجيل الدخول بنفس البريد وكلمة المرور.</div>
+              <div class="error" id="signupError"></div>
+            </form>
+            <div class="helper">لديك حساب بالفعل؟ <a href="#" data-open-login="true">سجل الدخول</a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const tabButtons = document.querySelectorAll(".tab-btn");
+      const panels = document.querySelectorAll(".panel");
+      const ACCOUNTS_KEY = "aoun_accounts";
+      const SESSION_KEY = "aoun_current_user";
+      const LAST_EMAIL_KEY = "aoun_last_email";
+
+      try {
+        const currentUser = JSON.parse(localStorage.getItem(SESSION_KEY));
+        if (currentUser && currentUser.email) {
+          window.location.href = "../index.html";
+        }
+      } catch {}
+
+      function getAccounts() {
+        try {
+          return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveAccounts(accounts) {
+        localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+      }
+
+      function saveLastEmail(email) {
+        localStorage.setItem(LAST_EMAIL_KEY, email);
+      }
+
+      function restoreLastEmail() {
+        const savedEmail = localStorage.getItem(LAST_EMAIL_KEY);
+        const loginEmailInput = document.getElementById("loginEmail");
+        const suggestionWrap = document.getElementById("emailSuggestionWrap");
+        const suggestionBtn = document.getElementById("emailSuggestionBtn");
+
+        if (savedEmail && loginEmailInput && suggestionWrap && suggestionBtn) {
+          suggestionBtn.textContent = savedEmail;
+          suggestionWrap.classList.add("show");
+          suggestionBtn.onclick = () => {
+            loginEmailInput.value = savedEmail;
+            loginEmailInput.focus();
+          };
+        }
+      }
+
+      function setMessage(successId, errorId, successText, errorText) {
+        const successBox = document.getElementById(successId);
+        const errorBox = document.getElementById(errorId);
+
+        if (successBox) {
+          successBox.textContent = successText || "";
+          successBox.classList.toggle("show", Boolean(successText));
+        }
+
+        if (errorBox) {
+          errorBox.textContent = errorText || "";
+          errorBox.classList.toggle("show", Boolean(errorText));
+        }
+      }
+
+      function openPanel(targetId) {
+        tabButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.target === targetId);
+        });
+        panels.forEach((panel) => {
+          panel.classList.toggle("active", panel.id === targetId);
+        });
+      }
+
+      tabButtons.forEach((btn) => {
+        btn.addEventListener("click", () => openPanel(btn.dataset.target));
+      });
+
+      document.querySelector('[data-open-signup="true"]')?.addEventListener("click", (event) => {
+        event.preventDefault();
+        openPanel("signupPanel");
+      });
+
+      document.querySelector('[data-open-login="true"]')?.addEventListener("click", (event) => {
+        event.preventDefault();
+        openPanel("loginPanel");
+      });
+
+      document.getElementById("loginForm")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+        const password = document.getElementById("loginPassword").value;
+        const accounts = getAccounts();
+        const user = accounts.find((account) => account.email === email);
+
+        if (!user) {
+          setMessage("loginSuccess", "loginError", "", "هذا البريد غير مسجل. أنشئ حسابًا أولًا.");
+          return;
+        }
+
+        if (user.password !== password) {
+          setMessage("loginSuccess", "loginError", "", "كلمة المرور غير صحيحة.");
+          return;
+        }
+
+        localStorage.setItem(SESSION_KEY, JSON.stringify({
+          name: user.name,
+          email: user.email
+        }));
+        saveLastEmail(user.email);
+
+        setMessage("loginSuccess", "loginError", "تم تسجيل الدخول بنجاح، سيتم تحويلك الآن.", "");
+        form.reset();
+        setTimeout(() => {
+          window.location.href = "../index.html";
+        }, 900);
+      });
+
+      document.getElementById("signupForm")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const name = document.getElementById("signupName").value.trim();
+        const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+        const password = document.getElementById("signupPassword").value;
+        const accounts = getAccounts();
+
+        if (password.length < 6) {
+          setMessage("signupSuccess", "signupError", "", "كلمة المرور يجب أن تكون 6 أحرف على الأقل.");
+          return;
+        }
+
+        if (accounts.some((account) => account.email === email)) {
+          setMessage("signupSuccess", "signupError", "", "هذا البريد مستخدم مسبقًا. جرّب تسجيل الدخول.");
+          return;
+        }
+
+        accounts.push({
+          name,
+          email,
+          password,
+          createdAt: new Date().toISOString()
+        });
+        saveAccounts(accounts);
+        saveLastEmail(email);
+
+        setMessage("signupSuccess", "signupError", "تم إنشاء الحساب بنجاح. يمكنك الآن تسجيل الدخول بنفس البريد وكلمة المرور.", "");
+        form.reset();
+        setTimeout(() => {
+          openPanel("loginPanel");
+          document.getElementById("loginEmail").value = email;
+        }, 700);
+      });
+
+      restoreLastEmail();
+    </script>
+  </body>
+</html>

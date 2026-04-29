@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>اختبار محاكي للقدرات | AOUN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #193158;
+        --primary-dark: #122443;
+        --line: #e5e8ef;
+        --muted: #607089;
+        --bg: #f5f7fb;
+        --surface: #ffffff;
+        --success-bg: #eef6ff;
+        --success-line: #d7e5f6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Cairo", sans-serif;
+        background: var(--bg);
+        color: var(--primary);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .topbar {
+        background: #fff;
+        border-bottom: 1px solid #eceff5;
+      }
+
+      .topbar-inner {
+        width: min(1140px, calc(100% - 32px));
+        min-height: 84px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .nav a {
+        font-size: 1.05rem;
+      }
+
+      .brand img {
+        width: 95px;
+        height: 40px;
+        object-fit: contain;
+      }
+
+      .wrap {
+        width: min(1040px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 36px 0 56px;
+      }
+
+      .hero {
+        background: linear-gradient(160deg, #193158 0%, #284d88 100%);
+        color: #fff;
+        border-radius: 28px;
+        padding: 34px 30px;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 4vw, 2.7rem);
+      }
+
+      .hero p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 2;
+      }
+
+      .quiz-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .quiz-pill {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.95rem;
+      }
+
+      .quiz-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 14px 40px rgba(25, 49, 88, 0.06);
+      }
+
+      .timer-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 18px;
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fbfcff;
+      }
+
+      .timer-label {
+        color: var(--muted);
+        font-size: 0.98rem;
+      }
+
+      .timer-value {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--primary);
+      }
+
+      .question-card {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px 18px 14px;
+        margin-bottom: 16px;
+      }
+
+      .question-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .question-number {
+        min-width: 44px;
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #eef2f8;
+        color: var(--primary);
+        font-weight: 800;
+      }
+
+      .question-category {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .question-title {
+        margin: 0 0 14px;
+        font-size: 1.18rem;
+        line-height: 1.9;
+      }
+
+      .option {
+        display: block;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .option:hover {
+        border-color: #c6d1e3;
+        background: #fafcff;
+      }
+
+      .option input {
+        margin-left: 8px;
+      }
+
+      .option.correct {
+        border-color: #69b578;
+        background: #eef9f0;
+      }
+
+      .option.wrong {
+        border-color: #dc7d7d;
+        background: #fff2f2;
+      }
+
+      .feedback {
+        display: none;
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        font-size: 0.95rem;
+        line-height: 1.9;
+      }
+
+      .feedback.show {
+        display: block;
+      }
+
+      .feedback.correct {
+        background: #eef9f0;
+        border: 1px solid #cfe8d4;
+        color: #1e6a33;
+      }
+
+      .feedback.wrong {
+        background: #fff4f4;
+        border: 1px solid #f0d1d1;
+        color: #9d2f2f;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 14px;
+        padding: 14px 22px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background: #eef2f8;
+        color: var(--primary);
+      }
+
+      .result {
+        display: none;
+        margin-top: 20px;
+        padding: 18px;
+        border-radius: 18px;
+        background: var(--success-bg);
+        border: 1px solid var(--success-line);
+      }
+
+      .result.show {
+        display: block;
+      }
+
+      .result h2 {
+        margin: 0 0 10px;
+      }
+
+      .result p {
+        margin: 6px 0;
+        color: var(--muted);
+      }
+
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .result-stat {
+        background: #fff;
+        border: 1px solid var(--success-line);
+        border-radius: 14px;
+        padding: 14px 16px;
+      }
+
+      .result-stat strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--primary);
+        font-size: 1.05rem;
+      }
+
+      @media (max-width: 860px) {
+        .topbar-inner {
+          flex-direction: column;
+          justify-content: center;
+          gap: 12px;
+          padding: 16px 0;
+        }
+
+        .nav {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 16px;
+        }
+
+        .timer-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <nav class="nav">
+          <a href="../index.html">الرئيسية</a>
+          <a href="../our-services/index.html">الخدمات</a>
+          <a href="../courses/index.html">الدورات</a>
+          <a href="../about-us/index.html">من نحن</a>
+          <a href="../help/index.html">المساعدة</a>
+        </nav>
+        <a class="brand" href="../index.html" aria-label="AOUN">
+          <img src="https://aoun.odoo.com/web/image/website/1/logo/AOUN?unique=bf1feec" alt="AOUN">
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>اختبار محاكي للقدرات</h1>
+        <p>اختبار محاكي من 24 سؤالًا مع مؤقت 25 دقيقة. أضفت فيه الأسئلة الظاهرة من الصور التي أرسلتها، وأكملت الباقي بأسئلة محاكية بنفس المستوى لتجربة أقرب للاختبار الحقيقي.</p>
+        <div class="quiz-meta">
+          <div class="quiz-pill">24 سؤال</div>
+          <div class="quiz-pill">25 دقيقة</div>
+          <div class="quiz-pill">لفظي وكمي</div>
+          <div class="quiz-pill">نتيجة فورية</div>
+        </div>
+      </section>
+
+      <section class="quiz-card">
+        <div class="timer-bar">
+          <div>
+            <div class="timer-label">الوقت المتبقي لإنهاء الاختبار</div>
+            <div class="timer-value" id="timerValue">25:00</div>
+          </div>
+          <div class="timer-label">إذا انتهى الوقت سيتم تصحيح الإجابات تلقائيًا.</div>
+        </div>
+
+        <form id="quizForm"></form>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="button" id="submitQuiz">إظهار النتيجة</button>
+          <button class="btn btn-secondary" type="button" id="resetQuiz">إعادة الاختبار</button>
+        </div>
+
+        <div class="result" id="quizResult">
+          <h2 id="resultTitle">نتيجتك</h2>
+          <p id="resultScore"></p>
+          <p id="resultMessage"></p>
+          <div class="result-stats">
+            <div class="result-stat"><strong id="correctCount">0</strong><span>إجابات صحيحة</span></div>
+            <div class="result-stat"><strong id="wrongCount">0</strong><span>إجابات خاطئة</span></div>
+            <div class="result-stat"><strong id="scorePercent">0%</strong><span>النسبة التقريبية</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../auth.js"></script>
+    <script>
+      const questions = [
+        {
+          id: "q1",
+          category: "قدرات كمي",
+          text: "عدد يقبل القسمة على 7، 5، 4 بدون باق، وإذا قسم على 9 كان الباقي 6، فما هو العدد؟",
+          options: [
+            { value: "a", text: "120" },
+            { value: "b", text: "126" },
+            { value: "c", text: "140" },
+            { value: "d", text: "180" }
+          ],
+          answer: "c"
+        },
+        {
+          id: "q2",
+          category: "قدرات كمي",
+          text: "5 أضعاف عدد زائد 4 يساوي 24، ما هو هذا العدد؟",
+          options: [
+            { value: "a", text: "3" },
+            { value: "b", text: "4" },
+            { value: "c", text: "5" },
+            { value: "d", text: "6" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q3",
+          category: "قدرات كمي",
+          text: "وزع مبلغ 7000 ريال على 3 أشخاص بنسب 5 : 3 : 2 بالترتيب، فكم نصيب الأول؟",
+          options: [
+            { value: "a", text: "2800" },
+            { value: "b", text: "3000" },
+            { value: "c", text: "3500" },
+            { value: "d", text: "4200" }
+          ],
+          answer: "c"
+        },
+        {
+          id: "q4",
+          category: "قدرات كمي",
+          text: "شخص يقضي 1/4 يومه في الدراسة، و1/3 يومه في النوم، و1/8 في الرياضة، فما الكسر الذي يعبر عن بقية يومه؟",
+          options: [
+            { value: "a", text: "5/24" },
+            { value: "b", text: "7/24" },
+            { value: "c", text: "1/4" },
+            { value: "d", text: "3/8" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q5",
+          category: "قدرات كمي",
+          text: "أنا رقم مكون من رقمين، العشرات 3 أضعاف الآحاد، وإذا عكست الرقمين نقص العدد بمقدار 36، فما هو العدد؟",
+          options: [
+            { value: "a", text: "93" },
+            { value: "b", text: "62" },
+            { value: "c", text: "84" },
+            { value: "d", text: "31" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q6",
+          category: "قدرات كمي",
+          text: "أكمل المتتابعة التالية: 2، 3، 5، 9، 17، 33، ؟",
+          options: [
+            { value: "a", text: "49" },
+            { value: "b", text: "57" },
+            { value: "c", text: "65" },
+            { value: "d", text: "66" }
+          ],
+          answer: "c"
+        },
+        {
+          category: "قدرات كمي",
+          id: "q7",
+          text: "تدق ساعة مرة واحدة عند الساعة 1، ومرتين عند الساعة 2، وهكذا حتى 12. كم دقة في يوم كامل؟",
+          options: [
+            { value: "a", text: "144" },
+            { value: "b", text: "156" },
+            { value: "c", text: "168" },
+            { value: "d", text: "172" }
+          ],
+          answer: "b"
+        },
+        {
+          category: "قدرات كمي",
+          id: "q8",
+          text: "إذا كان بعد يومين من الآن يوم الأحد، فما اليوم الذي يلي اليوم الذي قبل الأمس؟",
+          options: [
+            { value: "a", text: "الأربعاء" },
+            { value: "b", text: "الخميس" },
+            { value: "c", text: "الجمعة" },
+            { value: "d", text: "السبت" }
+          ],
+          answer: "b"
+        },
+        {
+          category: "قدرات كمي",
+          id: "q9",
+          text: "مقارنة: القيمة الأولى (0.1 × 0.1 × 0.1) والقيمة الثانية (0.01 + 0.01 + 0.01).",
+          options: [
+            { value: "a", text: "القيمة الأولى أكبر" },
+            { value: "b", text: "القيمة الثانية أكبر" },
+            { value: "c", text: "القيمتان متساويتان" },
+            { value: "d", text: "لا يمكن التحديد" }
+          ],
+          answer: "b"
+        },
+        {
+          category: "قدرات كمي",
+          id: "q10",
+          text: "إذا كان متوسط 5 أرقام متتالية هو 20، فما هو أصغر هذه الأرقام؟",
+          options: [
+            { value: "a", text: "16" },
+            { value: "b", text: "17" },
+            { value: "c", text: "18" },
+            { value: "d", text: "19" }
+          ],
+          answer: "c"
+        },
+        {
+          category: "قدرات كمي",
+          id: "q11",
+          text: "خزان ماء يمتلئ في 6 ساعات، وبسبب ثقب يفرغ في 12 ساعة، ففي كم ساعة يمتلئ؟",
+          options: [
+            { value: "a", text: "8 ساعات" },
+            { value: "b", text: "10 ساعات" },
+            { value: "c", text: "12 ساعة" },
+            { value: "d", text: "18 ساعة" }
+          ],
+          answer: "c"
+        },
+        {
+          id: "q12",
+          category: "قدرات كمي",
+          text: "إذا كان س + ص = 5 ، س - ص = 1 ، فأوجد س² - ص².",
+          options: [
+            { value: "a", text: "4" },
+            { value: "b", text: "5" },
+            { value: "c", text: "6" },
+            { value: "d", text: "8" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q13",
+          category: "قدرات لفظي",
+          text: "سيارة : إطار",
+          options: [
+            { value: "a", text: "عطر : وردة" },
+            { value: "b", text: "سهيل : كواكب" },
+            { value: "c", text: "عواصم : بغداد" },
+            { value: "d", text: "مزرعة : حصاد" }
+          ],
+          answer: "c"
+        },
+        {
+          id: "q14",
+          category: "قدرات لفظي",
+          text: "خطبة : نثر",
+          options: [
+            { value: "a", text: "عنب : فواكه" },
+            { value: "b", text: "بلاغة : نحو" },
+            { value: "c", text: "ورقيات : بقدونس" },
+            { value: "d", text: "منازل : مساكن" }
+          ],
+          answer: "a"
+        },
+        {
+          id: "q15",
+          category: "قدرات لفظي",
+          text: "نتيجة : شهادة",
+          options: [
+            { value: "a", text: "شباب : مراهقة" },
+            { value: "b", text: "يحبو : يمشي" },
+            { value: "c", text: "هرم : شيب" },
+            { value: "d", text: "رضاعة : فطام" }
+          ],
+          answer: "c"
+        },
+        {
+          category: "قدرات لفظي",
+          id: "q16",
+          text: "المال : الرفاهية",
+          options: [
+            { value: "a", text: "سيف : شجاعة" },
+            { value: "b", text: "الرطوبة : الصدأ" },
+            { value: "c", text: "بئر : مياه" },
+            { value: "d", text: "طاحونة : حبوب" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q17",
+          category: "قدرات لفظي - الخطأ السياقي",
+          text: "نحن نحب الماضي لأنه ذهب، ولو عاد لكرهناه، لذلك يجب أن نجعل أيامنا مليئة بالحسنات ليكون مستقبلنا ذكرى جميلة.",
+          options: [
+            { value: "a", text: "الماضي" },
+            { value: "b", text: "لكرهناه" },
+            { value: "c", text: "بالحسنات" },
+            { value: "d", text: "مستقبلنا" }
+          ],
+          answer: "d"
+        },
+        {
+          id: "q18",
+          category: "قدرات لفظي - الخطأ السياقي",
+          text: "لا تحزن إذا نجحت، ما دمت تحاول أن تنهض مجددا.",
+          options: [
+            { value: "a", text: "تحزن" },
+            { value: "b", text: "نجحت" },
+            { value: "c", text: "تحاول" },
+            { value: "d", text: "تنهض" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q19",
+          category: "قدرات لفظي - إكمال الجمل",
+          text: "اللغة تحول الذبذبات الصوتية إلى معان في ذهن .....",
+          options: [
+            { value: "a", text: "السامع" },
+            { value: "b", text: "الناطق" },
+            { value: "c", text: "الصامت" },
+            { value: "d", text: "ساكت" }
+          ],
+          answer: "a"
+        },
+        {
+          id: "q20",
+          category: "قدرات لفظي - إكمال الجمل",
+          text: "كلما ازداد الإنسان في ..... اتسعت أمامه مساحة .....",
+          options: [
+            { value: "a", text: "المعرفة : جهله" },
+            { value: "b", text: "الغنى : الفقر" },
+            { value: "c", text: "خوفا : الأمان" },
+            { value: "d", text: "العلم : النسيان" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q21",
+          category: "قدرات لفظي - استيعاب المقروء",
+          text: "وصل رواد الفضاء إلى القمر في ست بعثات فضائية مأهولة أطلقها برنامج أبولو، وقد ترك هؤلاء على القمر بعد عودتهم إلى الأرض آثار عجلات مركبات الاستكشاف، وآثار الأقدام، وأجهزة عاكسة لأشعة الليزر. كم عدد الآثار المتبقية على القمر؟",
+          options: [
+            { value: "a", text: "2" },
+            { value: "b", text: "3" },
+            { value: "c", text: "4" },
+            { value: "d", text: "5" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q22",
+          category: "قدرات لفظي - استيعاب المقروء",
+          text: "إذا اختبرت إنسانا ولم يكن صديقا لك فاحذر أن تجعله عدوا لك. علاقة الجملة الأخيرة بما قبلها هي:",
+          options: [
+            { value: "a", text: "تتميمها" },
+            { value: "b", text: "تعللها" },
+            { value: "c", text: "تفصلها" },
+            { value: "d", text: "استدراك" }
+          ],
+          answer: "a"
+        },
+        {
+          id: "q23",
+          category: "قدرات لفظي - استيعاب المقروء",
+          text: "النمل يفسد 10 ملايين هكتار سنويا، والهكتار = 100 كيلو متر. ما يفسده النمل سنويا بملايين الأمتار:",
+          options: [
+            { value: "a", text: "100000" },
+            { value: "b", text: "1000000" },
+            { value: "c", text: "10000000" },
+            { value: "d", text: "100000000000" }
+          ],
+          answer: "b"
+        },
+        {
+          id: "q24",
+          category: "قدرات لفظي - استيعاب المقروء",
+          text: "في معركة اليرموك جرح الحارث بن هشام، وعكرمة بن أبي جهل، وعياش بن أبي ربيعة رضي الله عنهم، وكانوا صرعى. فدعا الحارث بماء ليشربه، فنظر إليه عكرمة، فقال: ادفعه إلى عكرمة، فلما أخذه عكرمة نظر إليه عياش، فقال: ادفعه إلى عياش. فما وصل إلى عياش حتى مات، وما وصل إلى أحد منهم حتى ماتوا جميعا قبل أن يتذوقوه. ما معنى كلمة 'صرعى' كما وردت في القطعة؟",
+          options: [
+            { value: "a", text: "عطشى" },
+            { value: "b", text: "هلكى" },
+            { value: "c", text: "جرحى" },
+            { value: "d", text: "موتى" }
+          ],
+          answer: "c"
+        }
+      ];
+
+      const quizQuestions = questions;
+
+      const quizForm = document.getElementById("quizForm");
+      const submitQuiz = document.getElementById("submitQuiz");
+      const resetQuiz = document.getElementById("resetQuiz");
+      const quizResult = document.getElementById("quizResult");
+      const resultScore = document.getElementById("resultScore");
+      const resultMessage = document.getElementById("resultMessage");
+      const correctCount = document.getElementById("correctCount");
+      const wrongCount = document.getElementById("wrongCount");
+      const scorePercent = document.getElementById("scorePercent");
+      const timerValue = document.getElementById("timerValue");
+      let remainingSeconds = 25 * 60;
+      let timerId = null;
+      let submitted = false;
+
+      function renderQuestions() {
+        quizForm.innerHTML = quizQuestions.map((question, index) => `
+          <div class="question-card">
+            <div class="question-head">
+              <span class="question-number">${index + 1}</span>
+              <span class="question-category">${question.category}</span>
+            </div>
+            <p class="question-title">${question.text}</p>
+            ${question.options.map((option) => `
+              <label class="option">
+                <input type="radio" name="${question.id}" value="${option.value}">
+                ${option.text}
+              </label>
+            `).join("")}
+            <div class="feedback" id="feedback-${question.id}"></div>
+          </div>
+        `).join("");
+      }
+
+      function formatTime(totalSeconds) {
+        const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+        const seconds = String(totalSeconds % 60).padStart(2, "0");
+        return `${minutes}:${seconds}`;
+      }
+
+      function startTimer() {
+        timerValue.textContent = formatTime(remainingSeconds);
+        timerId = setInterval(() => {
+          remainingSeconds -= 1;
+          timerValue.textContent = formatTime(Math.max(remainingSeconds, 0));
+          if (remainingSeconds <= 0) {
+            clearInterval(timerId);
+            submitAnswers(true);
+          }
+        }, 1000);
+      }
+
+      function submitAnswers(autoSubmitted = false) {
+        if (submitted) return;
+        submitted = true;
+        clearInterval(timerId);
+
+        let score = 0;
+        let wrong = 0;
+
+        quizQuestions.forEach((question, index) => {
+          const selected = quizForm.querySelector(`input[name="${question.id}"]:checked`);
+          const selectedValue = selected ? selected.value : null;
+          const options = quizForm.querySelectorAll(`input[name="${question.id}"]`);
+          const feedbackBox = document.getElementById(`feedback-${question.id}`);
+          if (selectedValue === question.answer) {
+            score += 1;
+          } else {
+            wrong += 1;
+          }
+
+          const selectedText = question.options.find((option) => option.value === selectedValue)?.text || "لم تتم الإجابة";
+          const answerText = question.options.find((option) => option.value === question.answer)?.text || "";
+
+          options.forEach((input) => {
+            const optionLabel = input.closest(".option");
+            if (!optionLabel) return;
+            optionLabel.classList.remove("correct", "wrong");
+
+            if (input.value === question.answer) {
+              optionLabel.classList.add("correct");
+            }
+
+            if (selectedValue && input.value === selectedValue && selectedValue !== question.answer) {
+              optionLabel.classList.add("wrong");
+            }
+
+            input.disabled = true;
+          });
+
+          if (feedbackBox) {
+            const isCorrect = selectedValue === question.answer;
+            feedbackBox.className = `feedback show ${isCorrect ? "correct" : "wrong"}`;
+            feedbackBox.innerHTML = isCorrect
+              ? `إجابتك صحيحة.`
+              : `إجابتك ${selectedText === "لم تتم الإجابة" ? "غير موجودة" : "خاطئة"}.
+                 <br>الإجابة الصحيحة: <strong>${answerText}</strong>`;
+          }
+        });
+
+        resultScore.textContent = `أجبت بشكل صحيح على ${score} من ${quizQuestions.length} سؤالًا.`;
+        correctCount.textContent = `${score}`;
+        wrongCount.textContent = `${wrong}`;
+        scorePercent.textContent = `${Math.round((score / quizQuestions.length) * 100)}%`;
+
+        if (autoSubmitted) {
+          resultMessage.textContent = "انتهى الوقت وتم تصحيح الاختبار تلقائيًا.";
+        } else if (score >= 20) {
+          resultMessage.textContent = "ممتاز جدًا، نتيجتك قوية في الاختبار المحاكي.";
+        } else if (score >= 14) {
+          resultMessage.textContent = "نتيجة جيدة جدًا، ومع المزيد من التدريب سترتفع أكثر.";
+        } else {
+          resultMessage.textContent = "ابدأ بالمراجعة والتدريب المنتظم، وستلاحظ تحسنًا واضحًا.";
+        }
+
+        quizResult.classList.add("show");
+        quizResult.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function resetAll() {
+        submitted = false;
+        clearInterval(timerId);
+        remainingSeconds = 25 * 60;
+        quizForm.reset();
+        quizResult.classList.remove("show");
+        document.querySelectorAll(".feedback").forEach((box) => {
+          box.className = "feedback";
+          box.innerHTML = "";
+        });
+        document.querySelectorAll(".option").forEach((option) => {
+          option.classList.remove("correct", "wrong");
+        });
+        document.querySelectorAll('#quizForm input[type="radio"]').forEach((input) => {
+          input.disabled = false;
+        });
+        startTimer();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      renderQuestions();
+      startTimer();
+
+      submitQuiz.addEventListener("click", () => submitAnswers(false));
+      resetQuiz.addEventListener("click", resetAll);
+    </script>
+  </body>
+</html>
