@@ -34,7 +34,9 @@ a {
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
@@ -485,6 +487,76 @@ hr {
   font-size: 17px;
   line-height: 2;
   color: #424242;
+}
+
+.help-card {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 28px;
+}
+
+.help-card h2 {
+  margin: 0 0 10px;
+  font-size: 30px;
+  color: var(--primary);
+}
+
+.help-card p {
+  margin: 0 0 22px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.help-form {
+  display: grid;
+  gap: 16px;
+}
+
+.help-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.help-form input,
+.help-form select,
+.help-form textarea {
+  width: 100%;
+  border: 1px solid var(--line-dark);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+
+.help-form textarea {
+  resize: vertical;
+}
+
+.help-form input:focus,
+.help-form select:focus,
+.help-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(25, 49, 88, 0.12);
+}
+
+.help-submit-note {
+  display: none;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #cfe8d4;
+  border-radius: 8px;
+  background: #eef9f0;
+  color: #1e6a33;
+}
+
+.help-submit-note.show {
+  display: block;
 }
 
 @media (max-width: 991px) {
